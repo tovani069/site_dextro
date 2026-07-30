@@ -1,0 +1,220 @@
+@import "tailwindcss";
+
+/* Tema escuro controlado por classe (.dark no <html>), não pela preferência do SO. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-poppins), var(--font-inter), ui-sans-serif, sans-serif;
+
+  /* Paleta Dextro */
+  --color-tinta-50: #f8fafc;
+  --color-tinta-100: #f1f5f9;
+  --color-tinta-200: #e2e8f0;
+  --color-tinta-300: #cbd5e1;
+  --color-tinta-400: #94a3b8;
+  --color-tinta-500: #64748b;
+  --color-tinta-600: #475569;
+  --color-tinta-700: #334155;
+  --color-tinta-800: #1e293b;
+  --color-tinta-900: #0f172a;
+  --color-tinta-950: #0b1120;
+
+  --color-carvao: #16181d;
+  --color-carvao-claro: #212429;
+  /* Fundo da tela de login */
+  --color-noite: #141416;
+  --color-marca: #111827;
+  --color-acento: #3b82f6;
+  --color-perigo: #ef4444;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background-color: var(--color-tinta-100);
+    color: var(--color-tinta-900);
+  }
+
+  .dark body {
+    background-color: var(--color-carvao);
+    color: var(--color-tinta-100);
+  }
+
+  ::selection {
+    background-color: var(--color-tinta-900);
+    color: #fff;
+  }
+}
+
+@layer components {
+  /* Card branco padrão do portal */
+  .cartao {
+    border-radius: 1rem;
+    border: 1px solid var(--color-tinta-200);
+    background-color: #fff;
+    box-shadow: 0 1px 2px rgb(15 23 42 / 0.04);
+  }
+  .dark .cartao {
+    border-color: #2a2e36;
+    background-color: var(--color-carvao-claro);
+  }
+
+  /* Campo de formulário */
+  .campo {
+    width: 100%;
+    border-radius: 0.75rem;
+    border: 1px solid var(--color-tinta-200);
+    background-color: #fff;
+    padding: 0.625rem 0.875rem;
+    font-size: 0.875rem;
+    outline: none;
+  }
+  .campo:focus {
+    border-color: var(--color-tinta-900);
+    box-shadow: 0 0 0 3px rgb(15 23 42 / 0.08);
+  }
+  .dark .campo {
+    border-color: #2f333c;
+    background-color: #1a1d22;
+    color: var(--color-tinta-100);
+  }
+  .dark .campo:focus {
+    border-color: var(--color-tinta-400);
+    box-shadow: 0 0 0 3px rgb(148 163 184 / 0.15);
+  }
+
+  .rotulo {
+    display: block;
+    margin-bottom: 0.375rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-tinta-700);
+  }
+  .dark .rotulo {
+    color: var(--color-tinta-300);
+  }
+}
+
+/* --- Animações do diálogo de confirmação --- */
+
+@keyframes dextro-fundo {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes dextro-cartao {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes dextro-selo {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes dextro-lista {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes dextro-item {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Halo do farol de status "ativo" */
+@keyframes dextro-farol {
+  0% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(2.4);
+  }
+}
+
+.anim-fundo {
+  animation: dextro-fundo 0.18s ease-out both;
+}
+.anim-farol {
+  animation: dextro-farol 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+.anim-lista {
+  transform-origin: top center;
+  animation: dextro-lista 0.16s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.anim-item {
+  animation: dextro-item 0.18s ease-out both;
+}
+.anim-cartao {
+  animation: dextro-cartao 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.anim-selo {
+  animation: dextro-selo 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-fundo,
+  .anim-cartao,
+  .anim-selo,
+  .anim-farol,
+  .anim-lista,
+  .anim-item {
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+  }
+}
+
+/* Barra de rolagem discreta */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-tinta-300);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #3a3f48;
+  background-clip: content-box;
+}
