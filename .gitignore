@@ -2,6 +2,9 @@ node_modules/
 .next/
 out/
 build/
+
+# Configuração e skills locais do Claude Code — não são parte do produto
+.claude/
 .env*
 !.env.example
 next-env.d.ts
